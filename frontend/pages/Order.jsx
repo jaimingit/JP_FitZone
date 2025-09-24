@@ -22,7 +22,7 @@ function Order({ isDarkMode }) {
         return;
       }
 
-      const response = await fetch('http://localhost:5001/api/orders/membership', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/membership`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
