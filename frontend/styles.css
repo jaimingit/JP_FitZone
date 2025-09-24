@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+}
+
+.navbar-scrolled {
+    background-color: rgba(30, 41, 59, 0.98) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.splash-animation {
+    animation: splashFade 3s ease-in-out forwards;
+}
+
+@keyframes splashFade {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+    80% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.professional-glow {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.neon-glow {
+    box-shadow: 0 0 20px rgba(50, 215, 75, 0.3);
+}
+
+.testimonial-slider {
+    scroll-behavior: smooth;
+}
