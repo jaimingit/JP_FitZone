@@ -28,7 +28,7 @@ function Checkout({ cart, clearCart, removeFromCart, isDarkMode }) {
       return;
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/checkout`, {
+      const response = await fetch(`https://jp-fitzone.onrender.com/api/checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
