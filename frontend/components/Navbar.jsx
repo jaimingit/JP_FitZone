@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Navbar({ cartCount, isDarkMode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -7,15 +7,23 @@ function Navbar({ cartCount, isDarkMode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
+  const location = useLocation();
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
-    setProfileDropdownOpen(false); 
+    setProfileDropdownOpen(false);
   };
 
   const toggleProfileDropdown = () => {
     setProfileDropdownOpen(!profileDropdownOpen);
-    setMobileMenuOpen(false); 
+    setMobileMenuOpen(false);
   };
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setProfileDropdownOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const checkAuthStatus = () => {
@@ -29,7 +37,6 @@ function Navbar({ cartCount, isDarkMode }) {
           setUser(parsedUser);
         } catch (error) {
           console.error('Error parsing user data:', error);
-          // Clear invalid data
           sessionStorage.removeItem('token');
           sessionStorage.removeItem('user');
           setIsAuthenticated(false);
@@ -71,7 +78,6 @@ function Navbar({ cartCount, isDarkMode }) {
     setProfileDropdownOpen(false);
 
     window.dispatchEvent(new Event('authChange'));
-
     window.location.href = '/';
   };
 
@@ -194,6 +200,7 @@ function Navbar({ cartCount, isDarkMode }) {
                 {cartCount}
               </span>
             </Link>
+
             {/* Mobile Menu Button */}
             <button onClick={toggleMobileMenu} className="md:hidden">
               <i className={`fas fa-bars text-xl transition-colors ${
@@ -205,7 +212,7 @@ function Navbar({ cartCount, isDarkMode }) {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className={`md:hidden pb-4 transition-colors duration-300 ${
+          <div className={`md:hidden pb-4 transition-colors duration-300 z-50 block ${
             isDarkMode ? 'bg-dark-card' : 'bg-white'
           }`}>
             <div className="flex flex-col space-y-2">
@@ -222,7 +229,6 @@ function Navbar({ cartCount, isDarkMode }) {
               }`} onClick={() => setMobileMenuOpen(false)}>
                 Plans
               </Link>
-
               <Link to="/trainers" className={`text-left transition-colors py-2 block ${
                 isDarkMode ? 'hover:text-blue-500' : 'hover:text-blue-600'
               }`} onClick={() => setMobileMenuOpen(false)}>
@@ -285,14 +291,11 @@ function Navbar({ cartCount, isDarkMode }) {
         )}
       </div>
 
-      {/* Click outside to close dropdown */}
-      {(profileDropdownOpen || mobileMenuOpen) && (
+      {/* Click outside for profile dropdown only */}
+      {profileDropdownOpen && (
         <div
           className="fixed inset-0 z-40"
-          onClick={() => {
-            setProfileDropdownOpen(false);
-            setMobileMenuOpen(false);
-          }}
+          onClick={() => setProfileDropdownOpen(false)}
         />
       )}
     </nav>
