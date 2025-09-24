@@ -12,8 +12,10 @@ const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors({
-  origin: '*'
+  origin: 'https://jp-fit-zone.vercel.app', // your frontend URL
+  credentials: true
 }));
+
 
 app.use(express.json());
 
